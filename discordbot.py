@@ -253,4 +253,4 @@ async def list_servers():
 
 bot.loop.create_task(list_servers())
 # bot.run(TOKEN)  # for running locally
-client.run(os.getenv('TOKEN')) # for hosting on Heroku
+bot.run(os.getenv('TOKEN')) # for hosting on Heroku
