@@ -47,7 +47,7 @@ async def eight_ball():
 
 
 @client.command(name='killme', description="You will die.", brief="You die.",
-                aliases=['killme', 'kill me'], pass_context=True)
+                aliases=['kill me'], pass_context=True)
 async def kill_me():
     possible_responses = ['BANG! You\'re dead mutha fucka!',
                           'Wish granted, BANG!!']
