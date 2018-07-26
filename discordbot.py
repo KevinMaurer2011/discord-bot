@@ -28,9 +28,9 @@ client = Bot(command_prefix=BOT_PREFIX)
 @client.command(name='hello', description="You will get a nice greeting", brief="Says hello",
                 aliases=['hi', 'hey'], pass_context=True)
 async def hello(message):
-    possible_responses = ['Well, hello there ',
-                          'Hey, how are you ',
-                          'What\'s kicking ']
+    possible_responses = [f'Well, hello there {message.author.mention}',
+                          f'Hey, how are you {message.author.mention}',
+                          f'What\'s kicking {message.author.mention}']
 
     await client.say(random.choice(possible_responses))
 
