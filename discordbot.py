@@ -22,17 +22,18 @@ client = Bot(command_prefix=BOT_PREFIX)
 #
 #     if message.content.startswith('!hello'):
 #         msg = 'Hello {0.author.mention}'.format(message)
+#         f'Hello {message.author.mention}
 #         await client.send_message(message.channel, msg)
 
 
 @client.command(name='hello', description="You will get a nice greeting", brief="Says hello",
                 aliases=['hi', 'hey'], pass_context=True)
 async def hello(message):
-    possible_responses = [f'Well, hello there {message.author.mention}',
-                          f'Hey, how are you {message.author.mention}',
-                          f'What\'s kicking {message.author.mention}']
+    possible_responses = [f'Well, hello there ',
+                          f'Hey, how are you ',
+                          f'What\'s kicking ']
 
-    await client.say(random.choice(possible_responses))
+    await client.say(random.choice(possible_responses + message.author.mention))
 
 
 @client.command(name='8ball', description="Answers a yes/no question.", brief="Answers from the beyond.",
