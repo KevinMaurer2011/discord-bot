@@ -4,7 +4,6 @@ import aiohttp
 import json
 import requests
 import discord
-# noinspection PyPackageRequirements
 from discord import Game
 from discord.ext.commands import Bot
 from discord.ext import commands
