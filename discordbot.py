@@ -3,38 +3,60 @@ import asyncio
 import aiohttp
 import json
 import requests
-import os
+import discord
+# noinspection PyPackageRequirements
 from discord import Game
 from discord.ext.commands import Bot
+from discord.ext import commands
+import os
 
-BOT_PREFIX = "!"
+# TOKEN = open('C:/Users/kevin/Documents/discord_token.txt', 'r').readline() # used when hosting locally
+bot = Bot(command_prefix='!')
 
-client = Bot(command_prefix=BOT_PREFIX)
-
-
-# @client.event
-# async def on_message(message):
-#     # we do not want the bot to reply to itself
-#     if message.author == client.user:
-#         return
-#
-#     if message.content.startswith('!hello'):
-#         msg = 'Hello {0.author.mention}'.format(message)
-#         await client.send_message(message.channel, msg)
+print(discord.__version__)
 
 
-@client.command(name='hello', description="You will get a nice greeting", brief="Says hello",
-                aliases=['hi', 'hey'], pass_context=True)
-async def hello(message):
-    possible_responses = [f'Well, hello there ',
-                          f'Hey, how are you ',
-                          f'What\'s kicking ']
+@bot.command(name='hello', description="You will get a nice greeting and be mentioned", brief="Says hello",
+             aliases=['hi', 'hey'], pass_context=True)
+async def hello(ctx):
+    possible_responses = ['Well, hello there ',
+                          'Hey, how are you ',
+                          'What\'s kicking ']
 
-    await client.say(random.choice(possible_responses + message.author.mention))
+    await bot.say(random.choice(possible_responses) + ctx.message.author.mention)
 
 
-@client.command(name='8ball', description="Answers a yes/no question.", brief="Answers from the beyond.",
-                aliases=['eight_ball', 'eightball', '8-ball'], pass_context=True)
+@bot.command(name='serverinfo', description='Information about the current server', brief='Server info',
+             alises=['serverinfo', 'servinfo', 'sinfo'], pass_context=True)
+async def server_info(ctx):
+    embed = discord.Embed(name='{}\'s info'.format(ctx.message.server.name), description='Here\'s what I could find.',
+                          color=0x00ff00)
+    embed.set_author(name='ItsKraZyKev')
+    embed.add_field(name='Name', value=ctx.message.server.name, inline=True)
+    embed.add_field(name='ID', value=ctx.message.server.id, inline=True)
+    embed.add_field(name='Roles', value=len(ctx.message.server.roles), inline=True)
+    embed.add_field(name='Members', value=len(ctx.message.server.members), inline=True)
+    embed.set_thumbnail(url=ctx.message.server.icon_url)
+    await bot.say(embed=embed)
+
+
+# noinspection PyPackageRequirements
+@bot.command(name='info', pass_context=True)
+async def info(ctx):
+    embed = discord.Embed(name='', description='Here\'s what I could find.',
+                          color=0x00ff00)
+    embed.set_author(name='ItsKraZyKev')
+    embed.add_field(name="Name", value=discord.User.name, inline=True)
+    embed.add_field(name="ID", value=discord.User.id, inline=True)
+    embed.add_field(name="Status", value=discord.Member.status, inline=True)
+    embed.add_field(name="Highest role", value=discord.Member.top_role)
+    embed.add_field(name="Joined", value=discord.Member.joined_at)
+    # embed.set_thumbnail(url=)
+    await bot.say(embed=embed)
+
+
+@bot.command(name='8ball', description="Answers a yes/no question.", brief="Answers from the beyond.",
+             aliases=['eight_ball', 'eightball', '8-ball'], pass_context=True)
 async def eight_ball():
     possible_responses = [
         'That is a resounding no',
@@ -43,19 +65,38 @@ async def eight_ball():
         'It is quite possible',
         'Definitely',
     ]
-    await client.say(random.choice(possible_responses))
+    await bot.say(random.choice(possible_responses))
 
 
-@client.command(name='killme', description="You will die.", brief="You die.",
-                aliases=['kill me'], pass_context=True)
+@bot.command(name='killme', description="You will die.", brief="You die.",
+             aliases=['kill me'], pass_context=True)
 async def kill_me():
-    possible_responses = ['BANG! You\'re dead mutha fucka!',
-                          'Wish granted, BANG!!']
-    await client.say(random.choice(possible_responses))
+    possible_responses = ['I\'ve heard you\'re a low-down Yankee liar.',
+                          'Fill your hand, you son of a bitch.',
+                          'You gotta ask yourself a question, "Do I feel lucky?". Well, do you punk?',
+                          'Smile, you son of a bitch.',
+                          'Say hello to my little friend.',
+                          'Remember Sully, when I promised to kill you last? I lied.',
+                          'You\'re disease, and I\'m the cure.',
+                          'My name is Inigo Montoya. You killed my father. Prepare to die.',
+                          'I have come here to chew bubblegum and kick ass. And I\'m all out of bubblegum.',
+                          'You\'re out of bullets. And you know what that means, you\'re shit out of luck.',
+                          'I come in peace. And you go in pieces.',
+                          'There must be a hundred reasons why I don\'t blow you away. Right now,'
+                          ' I can\'t think of one.',
+                          'Yippee-ka-yay motherf--ker.',
+                          'Hasta La Vista, Baby.',
+                          'Long Live The King',
+                          '...And you will know my name is the Lord, when I lay my vengeance upon thee.',
+                          'You\'re fired!',
+                          'Resistance is futile.',
+                          'Dodge this.',
+                          'You Shall Not Pass.']
+    await bot.say(random.choice(possible_responses) + ':gun:')
 
 
-@client.command(name='roastme', description="This will roast you", brief="You will get roasted!",
-                aliases=['roast', 'roast_me'], pass_context=True)
+@bot.command(name='roastme', description="This will roast you", brief="You will get roasted!",
+             aliases=['roast', 'roast_me'], pass_context=True)
 async def roast_me():
     possible_responses = ['If laughter is the best medicine, your face must be curing the world.',
                           'You\'re so ugly, you scared the crap out of the toilet.',
@@ -137,34 +178,34 @@ async def roast_me():
                           'We can always tell when you are lying. Your lips move.',
                           'Are you always this stupid or is today a special occasion?']
 
-    await client.say(random.choice(possible_responses))
+    await bot.say(random.choice(possible_responses))
 
 
-@client.command(name='serverinv', description='Will give you a link for server invite', brief='Creates server invite',
-                aliases=['invite', 'serverinvite'], pass_context=True)
+@bot.command(name='serverinv', description='Will give you a link for server invite', brief='Creates server invite',
+             aliases=['invite', 'serverinvite'], pass_context=True)
 async def serverinv():
-    await client.say('https://discord.gg/yveXcD6')
+    await bot.say('https://discord.gg/yveXcD6')
 
 
-@client.command()
+@bot.command()
 async def square(number):
     squared_value = int(number) * int(number)
-    await client.say(str(number) + " squared is " + str(squared_value))
+    await bot.say(str(number) + " squared is " + str(squared_value))
 
 
-@client.command(name='bitcoin', description='Current price of Bitcoin in $USD', brief='$bitcoin',
-                pass_context=True)
+@bot.command(name='bitcoin', description='Current price of Bitcoin in $USD', brief='$bitcoin',
+             pass_context=True)
 async def bitcoin():
     url = 'https://api.coindesk.com/v1/bpi/currentprice/BTC.json'
     async with aiohttp.ClientSession() as session:  # Async HTTP request
         raw_response = await session.get(url)
         response = await raw_response.text()
         response = json.loads(response)
-        await client.say("Bitcoin price is: $" + response['bpi']['USD']['rate'])
+        await bot.say("Bitcoin price is: $" + response['bpi']['USD']['rate'])
 
 
-@client.command(name='weather', description="You will get the weather", brief="Weather details",
-                aliases=[], pass_context=True)
+@bot.command(name='weather', description="You will get the weather", brief="Weather details",
+             aliases=[], pass_context=True)
 async def weather():
     zip_search = '63389'
     api_key = 'appid=7a03b00d0882aebb22319016022eb33d'
@@ -172,14 +213,14 @@ async def weather():
 
     api_address = 'https://api.openweathermap.org/data/2.5/weather?&units=imperial&zip=' + search_data + api_key
     json_data = requests.get(api_address).json()
-    await client.say((f"The current weather is {json_data['weather'][0]['description'].title()}. \nThe min temp"
-                      f" is {json_data['main']['temp_min']}°F with a max temp of {json_data['main']['temp_max']}°F.\n"
-                      f"The wind speed is: {json_data['wind']['speed']}mph, with a humidity of {json_data['main']['humidity']}%\n"
-                      f"This weather information is provided for the following area code: {zip_search}"))
+    await bot.say((f"The current weather is {json_data['weather'][0]['description'].title()}. \nThe min temp"
+                   f" is {json_data['main']['temp_min']}°F with a max temp of {json_data['main']['temp_max']}°F.\n"
+                   f"The wind speed is: {json_data['wind']['speed']}mph, with a humidity of {json_data['main']['humidity']}%\n"
+                   f"This weather information is provided for the following area code: {zip_search}"))
 
 
-@client.command(name='forecast', decription='Weather forecast', brief='Forecast',
-                aliases=[], pass_context=True)
+@bot.command(name='forecast', decription='Weather forecast', brief='Forecast',
+             aliases=[], pass_context=True)
 async def forecast():
     zip_search = '63389'
     api_key = 'appid=7a03b00d0882aebb22319016022eb33d'
@@ -187,7 +228,7 @@ async def forecast():
 
     api_address = 'https://api.openweathermap.org/data/2.5/forecast?&units=imperial&zip=' + search_data + api_key
     json_data = requests.get(api_address).json()
-    await client.say(
+    await bot.say(
         f"The weather for {json_data['list'][3]['dt_txt']}<--(3pm) will be {json_data['list'][3]['weather'][0]['description']}, a min temp of {json_data['list'][3]['main']['temp_min']}°F, and a max temp of {json_data['list'][3]['main']['temp_max']}°F.\n"
         f"The weather for {json_data['list'][11]['dt_txt']}<--(3pm) will be {json_data['list'][11]['weather'][0]['description']}, a min temp of {json_data['list'][11]['main']['temp_min']}°F, and a max temp of {json_data['list'][11]['main']['temp_max']}°F.\n"
         f"The weather for {json_data['list'][19]['dt_txt']}<--(3pm) will be {json_data['list'][19]['weather'][0]['description']}, a min temp of {json_data['list'][19]['main']['temp_min']}°F, and a max temp of {json_data['list'][19]['main']['temp_max']}°F.\n"
@@ -195,20 +236,21 @@ async def forecast():
         f"The weather for {json_data['list'][35]['dt_txt']}<--(3pm) will be {json_data['list'][35]['weather'][0]['description']}, a min temp of {json_data['list'][35]['main']['temp_min']}°F, and a max temp of {json_data['list'][35]['main']['temp_max']}°F.\n")
 
 
-@client.event
+@bot.event
 async def on_ready():
-    await client.change_presence(game=Game(name="with humans! Mwuahah"))
-    print("Logged in as " + client.user.name)
+    await bot.change_presence(game=Game(name="with humans! Mwuahah"))
+    print("Logged in as " + bot.user.name)
 
 
 async def list_servers():
-    await client.wait_until_ready()
-    while not client.is_closed:
+    await bot.wait_until_ready()
+    while not bot.is_closed:
         print("Current servers:")
-        for server in client.servers:
+        for server in bot.servers:
             print(server.name)
         await asyncio.sleep(600)
 
 
-client.loop.create_task(list_servers())
-client.run(os.getenv('TOKEN'))
+bot.loop.create_task(list_servers())
+# bot.run(TOKEN)  # for running locally
+client.run(os.getenv('TOKEN')) # for hosting on Heroku
