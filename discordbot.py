@@ -7,9 +7,7 @@ import os
 from discord import Game
 from discord.ext.commands import Bot
 
-
 BOT_PREFIX = "!"
-
 
 client = Bot(command_prefix=BOT_PREFIX)
 
@@ -45,6 +43,14 @@ async def eight_ball():
         'It is quite possible',
         'Definitely',
     ]
+    await client.say(random.choice(possible_responses))
+
+
+@client.command(name='killme', description="You will die.", brief="You die.",
+                aliases=['killme', 'kill me'], pass_context=True)
+async def kill_me():
+    possible_responses = ['BANG! You\'re dead mutha fucka!',
+                          'Wish granted, BANG!!']
     await client.say(random.choice(possible_responses))
 
 
