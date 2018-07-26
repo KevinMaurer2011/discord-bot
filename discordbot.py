@@ -3,8 +3,10 @@ import asyncio
 import aiohttp
 import json
 import requests
+import os
 from discord import Game
 from discord.ext.commands import Bot
+
 
 BOT_PREFIX = "!"
 
@@ -203,4 +205,4 @@ async def list_servers():
 
 
 client.loop.create_task(list_servers())
-client.run(os.getenv('TOKEN')
+client.run(os.getenv('TOKEN'))
