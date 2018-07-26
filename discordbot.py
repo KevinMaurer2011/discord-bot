@@ -14,26 +14,25 @@ BOT_PREFIX = "!"
 client = Bot(command_prefix=BOT_PREFIX)
 
 
-# @client.event
-# async def on_message(message):
-#     # we do not want the bot to reply to itself
-#     if message.author == client.user:
-#         return
+@client.event
+async def on_message(message):
+    # we do not want the bot to reply to itself
+    if message.author == client.user:
+        return
+
+    if message.content.startswith('!hello'):
+        msg = 'Hello {0.author.mention}'.format(message)
+        await client.send_message(message.channel, msg)
+
+
+# @client.command(name='hello', description="You will get a nice greeting", brief="Says hello",
+#                 aliases=['hi', 'hey'], pass_context=True)
+# async def hello(message):
+#     possible_responses = [f'Well, hello there ',
+#                           f'Hey, how are you ',
+#                           f'What\'s kicking ']
 #
-#     if message.content.startswith('!hello'):
-#         msg = 'Hello {0.author.mention}'.format(message)
-#         f'Hello {message.author.mention}
-#         await client.send_message(message.channel, msg)
-
-
-@client.command(name='hello', description="You will get a nice greeting", brief="Says hello",
-                aliases=['hi', 'hey'], pass_context=True)
-async def hello(message):
-    possible_responses = [f'Well, hello there ',
-                          f'Hey, how are you ',
-                          f'What\'s kicking ']
-
-    await client.say(random.choice(possible_responses + message.author.mention))
+#     await client.say(random.choice(possible_responses + message.author.mention))
 
 
 @client.command(name='8ball', description="Answers a yes/no question.", brief="Answers from the beyond.",
