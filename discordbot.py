@@ -9,7 +9,8 @@ from discord.ext.commands import Bot
 from discord.ext import commands
 import os
 
-# TOKEN = open('C:/Users/kevin/Documents/discord_token.txt', 'r').readline() # used when hosting locally
+# TOKEN = open('C:/Users/kevin/Documents/discord_token.txt', 'r').readline()  # used when hosting locally
+
 bot = Bot(command_prefix='!')
 
 print(discord.__version__)
@@ -26,7 +27,7 @@ async def hello(ctx):
 
 
 @bot.command(name='serverinfo', description='Information about the current server', brief='Server info',
-             alises=['serverinfo', 'servinfo', 'sinfo'], pass_context=True)
+             aliases=['servinfo', 'sinfo', 'server'], pass_context=True)
 async def server_info(ctx):
     embed = discord.Embed(name='{}\'s info'.format(ctx.message.server.name), description='Here\'s what I could find.',
                           color=0x00ff00)
@@ -39,8 +40,8 @@ async def server_info(ctx):
     await bot.say(embed=embed)
 
 
-# noinspection PyPackageRequirements
-@bot.command(name='info', pass_context=True)
+@bot.command(name='info', description ='Get detailed info on the user who called me (you!)', brief='User info',
+             aliases = ['myinfo', 'meinfo'], pass_context=True)
 async def info(ctx):
     embed = discord.Embed(name='', description='Here\'s what I could find.',
                           color=0x00ff00)
@@ -54,7 +55,7 @@ async def info(ctx):
     await bot.say(embed=embed)
 
 
-@bot.command(name='8ball', description="Answers a yes/no question.", brief="Answers from the beyond.",
+@bot.command(name='8ball', description="Answers a yes/no question", brief="Answers from the beyond",
              aliases=['eight_ball', 'eightball', '8-ball'], pass_context=True)
 async def eight_ball():
     possible_responses = [
@@ -186,10 +187,18 @@ async def serverinv():
     await bot.say('https://discord.gg/yveXcD6')
 
 
-@bot.command()
+@bot.command(name='square', description='Will square whatever number you give me!', brief='Squares number',
+             aliases=[])
 async def square(number):
     squared_value = int(number) * int(number)
     await bot.say(str(number) + " squared is " + str(squared_value))
+
+
+@bot.command(name='cube', description='Will cube whatever number you give me!', brief='Cubes number',
+             aliases=[])
+async def cube_number(number):
+    triple_value = int(number) * int(number) * int(number)
+    await bot.say(f'{str(number)} cubed is {str(triple_value)}')
 
 
 @bot.command(name='bitcoin', description='Current price of Bitcoin in $USD', brief='$bitcoin',
@@ -203,19 +212,21 @@ async def bitcoin():
         await bot.say("Bitcoin price is: $" + response['bpi']['USD']['rate'])
 
 
-@bot.command(name='weather', description="You will get the weather", brief="Weather details",
-             aliases=[], pass_context=True)
-async def weather():
-    zip_search = '63389'
-    api_key = 'appid=7a03b00d0882aebb22319016022eb33d'
-    search_data = zip_search + ',us&'
+@bot.command(name='weather', description="You will get the weather", brief="Weather details", aliases=[], )
+async def weather(zip_code):
+    try:
+        zip_search = str(zip_code)
+        api_key = 'appid=7a03b00d0882aebb22319016022eb33d'
+        search_data = zip_search + ',us&'
 
-    api_address = 'https://api.openweathermap.org/data/2.5/weather?&units=imperial&zip=' + search_data + api_key
-    json_data = requests.get(api_address).json()
-    await bot.say((f"The current weather is {json_data['weather'][0]['description'].title()}. \nThe min temp"
-                   f" is {json_data['main']['temp_min']}°F with a max temp of {json_data['main']['temp_max']}°F.\n"
-                   f"The wind speed is: {json_data['wind']['speed']}mph, with a humidity of {json_data['main']['humidity']}%\n"
-                   f"This weather information is provided for the following area code: {zip_search}"))
+        api_address = 'https://api.openweathermap.org/data/2.5/weather?&units=imperial&zip=' + search_data + api_key
+        json_data = requests.get(api_address).json()
+        await bot.say((f"The current weather is {json_data['weather'][0]['description'].title()}. \nThe min temp"
+                       f" is {json_data['main']['temp_min']}°F with a max temp of {json_data['main']['temp_max']}°F.\n"
+                       f"The wind speed is: {json_data['wind']['speed']}mph, with a humidity of {json_data['main']['humidity']}%\n"
+                       f"This weather information is provided for the following area code: {zip_search}"))
+    except:
+        await bot.say('This doesn\'t seem to be a valid zip. Give that another go :)')
 
 
 @bot.command(name='forecast', decription='Weather forecast', brief='Forecast',
@@ -251,5 +262,7 @@ async def list_servers():
 
 
 bot.loop.create_task(list_servers())
-# bot.run(TOKEN)  # for running locally
 bot.run(os.getenv('TOKEN')) # for hosting on Heroku...
+# bot.run(TOKEN)  # for running locally
+
+
