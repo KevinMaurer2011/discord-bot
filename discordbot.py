@@ -22,8 +22,13 @@ async def hello(ctx):
     possible_responses = ['Well, hello there ',
                           'Hey, how are you ',
                           'What\'s kicking ']
-
     await bot.say(random.choice(possible_responses) + ctx.message.author.mention)
+
+
+@bot.command(name='youthere', decription='You will know if they are there!', brief='You there?',
+             alises=[], pass_context=True)
+async def you_there():
+    await bot.say('OHHHHH YEAHHHH SON!!!')
 
 
 @bot.command(name='serverinfo', description='Information about the current server', brief='Server info',
@@ -40,8 +45,8 @@ async def server_info(ctx):
     await bot.say(embed=embed)
 
 
-@bot.command(name='info', description ='Get detailed info on the user who called me (you!)', brief='User info',
-             aliases = ['myinfo', 'meinfo'], pass_context=True)
+@bot.command(name='info', description='Get detailed info on the user who called me (you!)', brief='User info',
+             aliases=['myinfo', 'meinfo'], pass_context=True)
 async def info(ctx):
     embed = discord.Embed(name='', description='Here\'s what I could find.',
                           color=0x00ff00)
@@ -262,7 +267,5 @@ async def list_servers():
 
 
 bot.loop.create_task(list_servers())
-bot.run(os.getenv('TOKEN')) # for hosting on Heroku...
+bot.run(os.getenv('TOKEN'))  # for hosting on Heroku...
 # bot.run(TOKEN)  # for running locally
-
-
