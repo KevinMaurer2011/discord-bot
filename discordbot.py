@@ -7,7 +7,6 @@ import praw
 import discord
 from discord import Game
 from discord.ext.commands import Bot
-
 from discord.ext import commands
 import os
 
@@ -47,21 +46,30 @@ async def reddit_meme():
                               client_secret=client_secret,
                               user_agent=user_agent)
 
-    await bot.say('One moment while I get you a spicy meme')
-    memes_submissions = reddit_meme.subreddit('memes+offensivememes+dankmemes+edgymemes+blackpeopletwitter+MemeEconomy+'
-                                              'wholesomememes+AdviceAnimals+trippinthroughtime+WhitePeopleTwitter+'
-                                              'boottoobig+bonehurtingjuice+dankchristianmemes+fakehistoryporn+'
-                                              'HistoryMemes+musicmemes+MEOW_IRL+woof_irl+youdontsurf+'
-                                              'starterpacks+wheredidthesodago+coaxedintoasnafu+lewronggeneration+'
-                                              'im14andthisisdeep+ImGoingToHellForThis+surrealmemes+BikiniBottomTwitter+'
-                                              'ahegao').new()
+    subreddit_choices = ['memes', 'offensivememes', 'dankmemes', 'blackpeopletwitter', 'MemeEconomy', 'wholesomememes',
+                         'AdviceAnimals', 'trippinthroughtime', 'WhitePeopleTwitter', 'boottoobig', 'bonehurtingjuice',
+                         'dankchristianmemes', 'fakehistoryporn', 'HistoryMemes', 'musicmemes', 'MEOW_IRL', 'woof_irl',
+                         'youdontsurf', 'starterpacks', 'wheredidthesodago', 'coaxedintoasnafu', 'lewronggeneration',
+                         'im14andthisisdeep', 'ImGoingToHellForThis', 'surrealmemes', 'BikiniBottomTwitter', 'ahegao']
 
+    random_choice = random.choice(subreddit_choices)
+    memes_submissions = reddit_meme.subreddit(random_choice).new()
     post_to_pick = random.randint(1, 30)
+    await bot.say(
+        f'This pic is from : https://reddit.com/r/{random_choice}/new/, it is post number {str(post_to_pick)}.'
+        f' Sorted by New ')
+
     for i in range(0, post_to_pick):
         submission = next(x for x in memes_submissions if not x.stickied)
-        await bot.say(submission)
 
     await bot.say(submission.url)
+
+
+@bot.command(name='youtube', description='Get a result from youtube', brief='YouTube result',
+             aliases=['yt'])
+async def youtube(*ctx):
+    string = '+'.join(str(c) for c in ctx)
+    await bot.say(f'https://youtube.com/results?search_query={string}')
 
 
 @bot.command(name='serverinfo', description='Information about the current server', brief='Server info',
