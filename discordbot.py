@@ -11,7 +11,7 @@ from discord.ext.commands import Bot
 from discord.ext import commands
 import os
 
-TOKEN = open('C:/Users/kevin/Documents/discord_token.txt', 'r').readline()  # used when hosting locally
+# TOKEN = open('C:/Users/kevin/Documents/discord_token.txt', 'r').readline()  # used when hosting locally
 # client_id, client_secret, user_agent = open('C:/Users/kevin/Documents/reddit-info.txt',
 #                                             'r').read().splitlines()  # reddit info, hosting locally
 
