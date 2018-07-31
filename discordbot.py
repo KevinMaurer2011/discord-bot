@@ -3,13 +3,22 @@ import asyncio
 import aiohttp
 import json
 import requests
+import praw
 import discord
 from discord import Game
 from discord.ext.commands import Bot
+
 from discord.ext import commands
 import os
 
-# TOKEN = open('C:/Users/kevin/Documents/discord_token.txt', 'r').readline()  # used when hosting locally
+TOKEN = open('C:/Users/kevin/Documents/discord_token.txt', 'r').readline()  # used when hosting locally
+# client_id, client_secret, user_agent = open('C:/Users/kevin/Documents/reddit-info.txt',
+#                                             'r').read().splitlines()  # reddit info, hosting locally
+
+client_id = os.getenv('client_id') # heroku
+client_secret = os.getenv('client_secret') # heroku
+user_agent = 'meme-bot' # heroku
+
 
 bot = Bot(command_prefix='!')
 
@@ -29,6 +38,21 @@ async def hello(ctx):
              alises=[], pass_context=True)
 async def you_there():
     await bot.say('OHHHHH YEAHHHH SON!!!')
+
+
+@bot.command(name='meme')
+async def reddit_meme():
+    reddit_meme = praw.Reddit(client_id=client_id,
+                              client_secret=client_secret,
+                              user_agent=user_agent)
+
+    await bot.say('One moment while I get you a spicy meme')
+    memes_submissions = reddit_meme.subreddit('memes').hot()
+    post_to_pick = random.randint(1, 10)
+    for i in range(0, post_to_pick):
+        submission = next(x for x in memes_submissions if not x.stickied)
+
+    await bot.say(submission.url)
 
 
 @bot.command(name='serverinfo', description='Information about the current server', brief='Server info',
