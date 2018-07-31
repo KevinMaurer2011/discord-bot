@@ -53,12 +53,13 @@ async def reddit_meme():
                                               'boottoobig+bonehurtingjuice+dankchristianmemes+fakehistoryporn+'
                                               'HistoryMemes+musicmemes+MEOW_IRL+woof_irl+youdontsurf+'
                                               'starterpacks+wheredidthesodago+coaxedintoasnafu+lewronggeneration+'
-                                              'im14andthisisdeep+ImGoingToHellForThis+surrealmemes+BikiniBottomTwitter').new()
+                                              'im14andthisisdeep+ImGoingToHellForThis+surrealmemes+BikiniBottomTwitter+'
+                                              'ahegao').new()
 
     post_to_pick = random.randint(1, 30)
-    await bot.say(post_to_pick)
     for i in range(0, post_to_pick):
         submission = next(x for x in memes_submissions if not x.stickied)
+        await bot.say(submission)
 
     await bot.say(submission.url)
 
