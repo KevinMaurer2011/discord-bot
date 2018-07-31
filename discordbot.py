@@ -48,7 +48,12 @@ async def reddit_meme():
                               user_agent=user_agent)
 
     await bot.say('One moment while I get you a spicy meme')
-    memes_submissions = reddit_meme.subreddit('memes+offensivememes+dankmemes ').hot()
+    memes_submissions = reddit_meme.subreddit('memes+offensivememes+dankmemes+edgymemes+blackpeopletwitter+MemeEconomy+'
+                                              'wholesomememes+AdviceAnimals+trippinthroughtime+WhitePeopleTwitter+'
+                                              'boottoobig+bonehurtingjuice+dankchristianmemes+fakehistoryporn+'
+                                              'HistoryMemes+musicmemes+MEOW_IRL+woof_irl+youdontsurf+'
+                                              'starterpacks+wheredidthesodago+coaxedintoasnafu+lewronggeneration+'
+                                              'im14andthisisdeep+ImGoingToHellForThis+surrealmemes+BikiniBottomTwitter').new()
     post_to_pick = random.randint(1, 30)
     for i in range(0, post_to_pick):
         submission = next(x for x in memes_submissions if not x.stickied)
