@@ -40,7 +40,8 @@ async def you_there():
     await bot.say('OHHHHH YEAHHHH SON!!!')
 
 
-@bot.command(name='meme')
+@bot.command(name='meme', decription='Gets you a nice meme from reddit!', brief='More meme?',
+             alises=[], pass_context=True)
 async def reddit_meme():
     reddit_meme = praw.Reddit(client_id=client_id,
                               client_secret=client_secret,
