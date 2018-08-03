@@ -5,3 +5,4 @@ aiohttp
 requests
 praw
 bs4
+beautifulsoup4
