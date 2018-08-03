@@ -4,6 +4,4 @@ asyncio
 aiohttp
 requests
 praw
-bs4
-beautifulsoup4
-from bs4 import BeautifulSoup
+beautifulsoup4==4.3.2
