@@ -114,6 +114,69 @@ async def eight_ball():
     await bot.say(random.choice(possible_responses))
 
 
+@bot.command(name='roll')
+async def role_dice(num_dice, num_side):
+    if num_dice.isalpha() or num_side.isalpha():
+        await bot.say(' Numbers only boys')
+
+    num_dice = int(num_dice)
+    num_side = int(num_side)
+
+    if num_dice > 1000000000 or num_side > 1000000000:
+        await bot.say('Nice try there bud, maybe use a number less than 1 billion? XD ')
+
+    if num_dice < 1 or num_side < 6:
+        await bot.say('No, you can\'t roll less than 1 die, or a die with less than 6 sides!')
+
+
+    else:
+        rolled_list = []
+        for i in range(0, int(num_dice)):
+            rolled_list.append(random.randint(1, int(num_side)))
+        await bot.say(rolled_list)
+
+@bot.command(name='test')
+async def test_test():
+    await bot.say('I\'m here good buddy! All is well!')
+
+
+@bot.command(name='troll')
+async def troll_troll():
+    await bot.say('░░░░░▄▄▄▄▀▀▀▀▀▀▀▀▄▄▄▄▄▄░░░░░░░\n'
+                  '░░░░░█░░░░▒▒▒▒▒▒▒▒▒▒▒▒░░▀▀▄░░░░\n'
+                  '░░░░█░░░▒▒▒▒▒▒░░░░░░░░▒▒▒░░█░░░\n'
+                  '░░░█░░░░░░▄██▀▄▄░░░░░▄▄▄░░░░█░░\n'
+                  '░▄▀▒▄▄▄▒░█▀▀▀▀▄▄█░░░██▄▄█░░░░█░\n'
+                  '█░▒█▒▄░▀▄▄▄▀░░░░░░░░█░░░▒▒▒▒▒░█\n'
+                  '█░▒█░█▀▄▄░░░░░█▀░░░░▀▄░░▄▀▀▀▄▒█\n'
+                  '░█░▀▄░█▄░█▀▄▄░▀░▀▀░▄▄▀░░░░█░░█░\n'
+                  '░░█░░░▀▄▀█▄▄░█▀▀▀▄▄▄▄▀▀█▀██░█░░\n'
+                  '░░░█░░░░██░░▀█▄▄▄█▄▄█▄████░█░░░\n'
+                  '░░░░█░░░░▀▀▄░█░░░█░█▀██████░█░░\n'
+                  '░░░░░▀▄░░░░░▀▀▄▄▄█▄█▄█▄█▄▀░░█░░\n'
+                  '░░░░░░░▀▄▄░▒▒▒▒░░░░░░░░░░▒░░░█░\n'
+                  '░░░░░░░░░░▀▀▄▄░▒▒▒▒▒▒▒▒▒▒░░░░█░\n'
+                  '░░░░░░░░░░░░░░▀▄▄▄▄▄░░░░░░░░█░░')
+
+
+@bot.command(name='spamtroll')
+async def troll_troll():
+    await bot.say('░░░░░▄▄▄▄▀▀▀▀▀▀▀▀▄▄▄▄▄▄░░░░░░░\n'
+                  '░░░░░█░░░░▒▒▒▒▒▒▒▒▒▒▒▒░░▀▀▄░░░░\n'
+                  '░░░░█░░░▒▒▒▒▒▒░░░░░░░░▒▒▒░░█░░░\n'
+                  '░░░█░░░░░░▄██▀▄▄░░░░░▄▄▄░░░░█░░\n'
+                  '░▄▀▒▄▄▄▒░█▀▀▀▀▄▄█░░░██▄▄█░░░░█░\n'
+                  '█░▒█▒▄░▀▄▄▄▀░░░░░░░░█░░░▒▒▒▒▒░█\n'
+                  '█░▒█░█▀▄▄░░░░░█▀░░░░▀▄░░▄▀▀▀▄▒█\n'
+                  '░█░▀▄░█▄░█▀▄▄░▀░▀▀░▄▄▀░░░░█░░█░\n'
+                  '░░█░░░▀▄▀█▄▄░█▀▀▀▄▄▄▄▀▀█▀██░█░░\n'
+                  '░░░█░░░░██░░▀█▄▄▄█▄▄█▄████░█░░░\n'
+                  '░░░░█░░░░▀▀▄░█░░░█░█▀██████░█░░\n'
+                  '░░░░░▀▄░░░░░▀▀▄▄▄█▄█▄█▄█▄▀░░█░░\n'
+                  '░░░░░░░▀▄▄░▒▒▒▒░░░░░░░░░░▒░░░█░\n'
+                  '░░░░░░░░░░▀▀▄▄░▒▒▒▒▒▒▒▒▒▒░░░░█░\n'
+                  '░░░░░░░░░░░░░░▀▄▄▄▄▄░░░░░░░░█░░\n' * 3)
+
 @bot.command(name='killme', description="You will die.", brief="You die.",
              aliases=['kill me'], pass_context=True)
 async def kill_me():
