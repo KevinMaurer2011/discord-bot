@@ -72,7 +72,7 @@ async def reddit_meme():
 async def urban_dictionary(*ctx):
     search = ' '.join(str(c) for c in ctx)
     r = requests.get("http://www.urbandictionary.com/define.php?term={}".format(search))
-    soup = BeautifulSoup(r.content, features='html5lib')
+    soup = BeautifulSoup(r.content)
 
     try:
         await bot.say(soup.find("div", attrs={"class": "meaning"}).text)
