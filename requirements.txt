@@ -6,3 +6,4 @@ requests
 praw
 bs4
 beautifulsoup4
+from bs4 import BeautifulSoup
