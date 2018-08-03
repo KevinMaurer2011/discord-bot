@@ -7,6 +7,7 @@ import praw
 import discord
 from discord import Game
 from discord.ext.commands import Bot
+from bs4 import BeautifulSoup
 from discord.ext import commands
 import os
 
@@ -36,7 +37,9 @@ async def hello(ctx):
 @bot.command(name='youthere', decription='You will know if they are there!', brief='You there?',
              alises=[], pass_context=True)
 async def you_there():
-    await bot.say('OHHHHH YEAHHHH SON!!!')
+    possible_responses = ['OHHHHH YEAHHHH SON!!!',
+                          'Where else would I be?']
+    await bot.say(random.choice(possible_responses))
 
 
 @bot.command(name='meme', decription='Gets you a nice meme from reddit!', brief='More meme?',
@@ -63,6 +66,20 @@ async def reddit_meme():
         submission = next(x for x in memes_submissions if not x.stickied)
 
     await bot.say(submission.url)
+
+
+@bot.command(name='urban')
+async def urban_dictionary(*ctx):
+    search = ' '.join(str(c) for c in ctx)
+    r = requests.get("http://www.urbandictionary.com/define.php?term={}".format(search))
+    soup = BeautifulSoup(r.content, features='html5lib')
+
+    try:
+        await bot.say(soup.find("div", attrs={"class": "meaning"}).text)
+
+    except AttributeError:
+        await bot.say('Search returned no results, try something else, or be more broad.')
+
 
 
 @bot.command(name='youtube', description='Get a result from youtube', brief='YouTube result',
