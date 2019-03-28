@@ -220,6 +220,16 @@ async def kill_me():
                           'You Shall Not Pass.']
     await bot.say(random.choice(possible_responses) + ':gun:')
 
+@bot.command(name='eat', description="Need to know where to eat?", brief="FOOD!",
+             aliases=[], pass_context=True)
+async def roast_me():
+    possible_responses = ['Applebees',
+                          'McDonalds bitchhhhhhh',
+                          'Taco Bell']
+
+    await bot.say(random.choice(possible_responses))
+
+
 
 @bot.command(name='roastme', description="This will roast you", brief="You will get roasted!",
              aliases=['roast', 'roast_me'], pass_context=True)
