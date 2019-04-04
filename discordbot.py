@@ -222,12 +222,17 @@ async def kill_me():
 
 @bot.command(name='eat', description="Need to know where to eat?", brief="FOOD!",
              aliases=[], pass_context=True)
-async def roast_me():
+async def food_eat():
     possible_responses = ['Applebees',
                           'McDonalds bitchhhhhhh',
                           'Taco Bell']
 
     await bot.say(random.choice(possible_responses))
+
+@bot.command(name='picofkevdick', description="This is my Dick", brief="DicK!",
+             aliases=[], pass_context=True)
+async def dick_pic():
+    await bot.say('https://pics.me.me/mall-hiro-trolled-xd-16312171.png')
 
 
 
@@ -418,7 +423,7 @@ async def forecast():
 
 @bot.event
 async def on_ready():
-    await bot.change_presence(game=Game(name="with humans! Mwuahah"))
+    await bot.change_presence(game=Game(name="00101110001001"))
     print("Logged in as " + bot.user.name)
 
 
