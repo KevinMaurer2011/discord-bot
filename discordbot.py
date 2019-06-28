@@ -11,13 +11,13 @@ from discord.ext.commands import Bot
 from discord.ext import commands
 import os
 
-# TOKEN = open('C:/Users/kevin/Documents/discord_token.txt', 'r').readline()  # used when hosting locally
-# client_id, client_secret, user_agent = open('C:/Users/kevin/Documents/reddit-info.txt',
-#                                             'r').read().splitlines()  # reddit info, hosting locally
+TOKEN = open('D:/Saved Downloads/discord_token.txt', 'r').readline()  # used when hosting locally
+client_id, client_secret, user_agent = open('D:/Saved Downloads/reddit-info.txt',
+                                            'r').read().splitlines()  # reddit info, hosting locally
 
-client_id = os.getenv('client_id') # heroku
-client_secret = os.getenv('client_secret') # heroku
-user_agent = 'meme-bot' # heroku
+# client_id = os.getenv('client_id') # heroku
+# client_secret = os.getenv('client_secret') # heroku
+# user_agent = 'meme-bot' # heroku
 
 
 bot = Bot(command_prefix='!')
@@ -25,7 +25,7 @@ bot = Bot(command_prefix='!')
 print(discord.__version__)
 
 
-@bot.command(name='hello', description="You will get a nice greeting and be mentioned", brief="Says hello",
+@bot.command(name='hello', description="You will get a nice greeting and be mentioned", brief="Says hello!!!",
              aliases=['hi', 'hey'], pass_context=True)
 async def hello(ctx):
     possible_responses = ['Well, hello there ',
@@ -436,6 +436,7 @@ async def list_servers():
         await asyncio.sleep(600)
 
 
-bot.loop.create_task(list_servers())
-bot.run(os.getenv('TOKEN'))  # for hosting on Heroku...
-# bot.run(TOKEN)  # for running locally
+# bot.loop.create_task(list_servers())
+# bot.run(os.getenv('TOKEN'))  # for hosting on Heroku...
+bot.run(TOKEN)  # for running locally
+t
