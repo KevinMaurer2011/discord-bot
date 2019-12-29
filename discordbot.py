@@ -439,5 +439,5 @@ async def on_ready():
 
 
 # bot.loop.create_task(list_servers())
-client.run(os.getenv('TOKEN'))  # for hosting on Heroku...
+client.run('TOKEN')  # for hosting on Heroku...
 # client.run(TOKEN)  # for running locally
