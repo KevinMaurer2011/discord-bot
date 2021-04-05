@@ -131,7 +131,7 @@ async def eight_ball(ctx):
 
 
 @client.command(name='roll')
-async def role_dice(num_dice, num_side, ctx):
+async def role_dice(ctx, num_dice, num_side):
     if num_dice.isalpha() or num_side.isalpha():
         await ctx.send(' Numbers only boys')
 
