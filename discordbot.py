@@ -153,9 +153,9 @@ async def role_dice(num_dice, num_side):
 
 
 @client.command(name='test')
-async def test_test():
-    await client.send('I\'m here good buddy! All is well!')
-
+async def test_test(ctx):
+    # await client.send('I\'m here good buddy! All is well!')
+    await ctx.send('I\'m here good buddy! All is well!')
 
 @client.command(name='troll')
 async def troll_troll(ctx):
