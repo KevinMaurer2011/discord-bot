@@ -119,7 +119,7 @@ async def info(ctx):
 
 @client.command(name='8ball', description="Answers a yes/no question", brief="Answers from the beyond",
                 aliases=['eight_ball', 'eightball', '8-ball'], pass_context=True)
-async def eight_ball():
+async def eight_ball(ctx):
     possible_responses = [
         'That is a resounding no',
         'It is not looking likely',
@@ -127,34 +127,34 @@ async def eight_ball():
         'It is quite possible',
         'Definitely',
     ]
-    await client.send(random.choice(possible_responses))
+    await ctx.send(random.choice(possible_responses))
 
 
 @client.command(name='roll')
-async def role_dice(num_dice, num_side):
+async def role_dice(num_dice, num_side, ctx):
     if num_dice.isalpha() or num_side.isalpha():
-        await client.send(' Numbers only boys')
+        await ctx.send(' Numbers only boys')
 
     num_dice = int(num_dice)
     num_side = int(num_side)
 
     if num_dice > 1000000000 or num_side > 1000000000:
-        await client.send('Nice try there bud, maybe use a number less than 1 billion? XD ')
+        await ctx.send('Nice try there bud, maybe use a number less than 1 billion? XD ')
 
     if num_dice < 1 or num_side < 6:
-        await client.send('No, you can\'t roll less than 1 die, or a die with less than 6 sides!')
+        await ctx.send('No, you can\'t roll less than 1 die, or a die with less than 6 sides!')
 
 
     else:
         rolled_list = []
         for i in range(0, int(num_dice)):
             rolled_list.append(random.randint(1, int(num_side)))
-        await client.send(rolled_list)
+        await ctx.send(rolled_list)
 
 
 @client.command(name='test')
 async def test_test(ctx):
-    # await client.send('I\'m here good buddy! All is well!')
+    # await ctx.send('I\'m here good buddy! All is well!')
     await ctx.send('I\'m here good buddy! All is well!')
 
 @client.command(name='troll')
