@@ -11,8 +11,8 @@ from discord.ext.commands import Bot
 from discord.ext import commands
 import os
 
-# TOKEN = open('C:/Users/kevin/One Drive/Documents/discord_token.txt', 'r').readline()  # used when hosting locally
-# client_id, client_secret, user_agent = open('C:/Users/kevin/Google Drive/Documents/reddit-info.txt',
+# TOKEN = open('C:/Users/kevin/OneDrive/Documents/discord_token.txt', 'r').readline()  # used when hosting locally
+# client_id, client_secret, user_agent = open('C:/Users/kevin/OneDrive/Documents/reddit-info.txt',
 #                                             'r').read().splitlines()  # reddit info, hosting locally
 
 client_id = os.getenv('client_id') # heroku
