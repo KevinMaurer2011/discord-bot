@@ -10,15 +10,15 @@ from discord.ext.commands import Bot
 # from bs4 import BeautifulSoup
 from discord.ext import commands
 import os
+from tcc_scraper import GetPrices
 
-# TOKEN = open('C:/Users/kevin/OneDrive/Documents/discord_token.txt', 'r').readline()  # used when hosting locally
-# client_id, client_secret, user_agent = open('C:/Users/kevin/OneDrive/Documents/reddit-info.txt',
-#                                             'r').read().splitlines()  # reddit info, hosting locally
+TOKEN = open('C:/Users/kevin/OneDrive/Documents/discord_token.txt', 'r').readline()  # used when hosting locally
+client_id, client_secret, user_agent = open('C:/Users/kevin/OneDrive/Documents/reddit-info.txt',
+                                            'r').read().splitlines()  # reddit info, hosting locally
 
-client_id = os.getenv('client_id') # heroku
-client_secret = os.getenv('client_secret') # heroku
-user_agent = 'meme-bot' # heroku
-
+# client_id = os.getenv('client_id')  # heroku
+# client_secret = os.getenv('client_secret')  # heroku
+# user_agent = 'meme-bot'  # heroku
 
 client = Bot(command_prefix='!')
 
@@ -46,8 +46,8 @@ async def you_there(ctx):
                 alises=[], pass_context=True)
 async def reddit_meme(ctx):
     reddit_memes = praw.Reddit(client_id=client_id,
-                              client_secret=client_secret,
-                              user_agent=user_agent)
+                               client_secret=client_secret,
+                               user_agent=user_agent)
 
     subreddit_choices = ['memes', 'offensivememes', 'dankmemes', 'blackpeopletwitter', 'MemeEconomy', 'wholesomememes',
                          'AdviceAnimals', 'trippinthroughtime', 'WhitePeopleTwitter', 'boottoobig', 'bonehurtingjuice',
@@ -156,6 +156,7 @@ async def role_dice(ctx, num_dice, num_side):
 async def test_test(ctx):
     # await ctx.send('I\'m here good buddy! All is well!')
     await ctx.send('I\'m here good buddy! All is well!')
+
 
 @client.command(name='troll')
 async def troll_troll(ctx):
@@ -429,6 +430,9 @@ async def on_ready():
     print("Logged in as " + client.user.name)
 
 
+
+
+
 # async def list_servers():
 #     await ctx.wait_until_ready()
 #     while not ctx.is_closed:
@@ -439,5 +443,12 @@ async def on_ready():
 
 
 # bot.loop.create_task(list_servers())
-client.run(os.getenv('TOKEN'))  # for  hosting on Heroku...
-# client.run(TOKEN)  # for running locally
+# client.run(os.getenv('TOKEN'))  # for  hosting on Heroku...
+client.run(TOKEN)  # for running locally
+
+
+GetPrices(11807, 300000)  # Aetherial Dust
+GetPrices(211, 100000)  # Dreugh Wax
+GetPrices(6132, 100000)  # Perfect Roe
+GetPrices(5687, 100000)  # Tempering Alloy
+GetPrices(17927, 100000)  # Chromium Grains
