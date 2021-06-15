@@ -12,13 +12,13 @@ from discord.ext import commands
 import os
 from tcc_scraper import GetPrices
 
-TOKEN = open('C:/Users/kevin/OneDrive/Documents/discord_token.txt', 'r').readline()  # used when hosting locally
-client_id, client_secret, user_agent = open('C:/Users/kevin/OneDrive/Documents/reddit-info.txt',
-                                            'r').read().splitlines()  # reddit info, hosting locally
+# TOKEN = open('C:/Users/kevin/OneDrive/Documents/discord_token.txt', 'r').readline()  # used when hosting locally
+# client_id, client_secret, user_agent = open('C:/Users/kevin/OneDrive/Documents/reddit-info.txt',
+#                                             'r').read().splitlines()  # reddit info, hosting locally
 
-# client_id = os.getenv('client_id')  # heroku
-# client_secret = os.getenv('client_secret')  # heroku
-# user_agent = 'meme-bot'  # heroku
+client_id = os.getenv('client_id')  # heroku
+client_secret = os.getenv('client_secret')  # heroku
+user_agent = 'meme-bot'  # heroku
 
 client = Bot(command_prefix='!')
 
@@ -442,9 +442,9 @@ async def on_ready():
 #         await asyncio.sleep(600)
 
 
-# bot.loop.create_task(list_servers())
-# client.run(os.getenv('TOKEN'))  # for  hosting on Heroku...
-client.run(TOKEN)  # for running locally
+bot.loop.create_task(list_servers())
+client.run(os.getenv('TOKEN'))  # for  hosting on Heroku...
+# client.run(TOKEN)  # for running locally
 
 
 GetPrices(11807, 300000)  # Aetherial Dust
